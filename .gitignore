@@ -1,0 +1,10 @@
+MOLPayXDKExample/tmp
+.DS_Store
+MOLPayXDKExample/build/iphone/*
+MOLPayXDKExample/!build/iphone/.gitignore
+MOLPayXDKExample/build/android/*
+MOLPayXDKExample/!build/android/.gitignore
+MOLPayXDKExample/.settings
+MOLPayXDKExample/build.log
+MOLPayXDKExample/.fastdev.lock
+MOLPayXDKExample/build/*.log
