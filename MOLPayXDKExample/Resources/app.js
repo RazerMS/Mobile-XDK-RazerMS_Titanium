@@ -66,6 +66,8 @@ var paymentDetails = {
 	'mp_editing_enabled' : false, // Optional String.
 	'mp_transaction_id' : '', // For transaction request use only, do not use this on payment process
 	'mp_request_type' : '' // For transaction request use only, do not use this on payment process
+	// 'mp_filter' : '0', // Optional for debit card payment only 
+	// 'mp_custom_css_url' : Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'custom.css').nativePath // Optional for custom UI
 };
 
 var molpayCallback = function (transactionResult) {
