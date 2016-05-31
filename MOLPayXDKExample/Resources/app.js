@@ -65,7 +65,9 @@ var paymentDetails = {
 	'mp_channel_editing' : false, // Optional String.
 	'mp_editing_enabled' : false, // Optional String.
 	'mp_transaction_id' : '', // For transaction request use only, do not use this on payment process
-	'mp_request_type' : '' // For transaction request use only, do not use this on payment process
+	'mp_request_type' : '' // Optional, set 'Status' when performing a transactionRequest
+	// 'mp_bin_lock' : ['414170', '414171'], // Optional for credit card BIN restrictions
+	// 'mp_bin_lock_err_msg' : 'Only UOB allowed' // Optional for credit card BIN restrictions
 	// 'mp_is_escrow' : '' // Optional for Escrow, put "1" to enable escrow
 	// 'mp_filter' : '0', // Optional for debit card payment only 
 	// 'mp_custom_css_url' : Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'custom.css').nativePath // Optional for custom UI
