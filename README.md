@@ -163,19 +163,6 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     
     4) After the user done the paying at the 7-Eleven counter, they can close and exit MOLPay XDK by clicking the “Close” button again.
 
-## Transaction status request service (Optional, NOT required for payment process)
-
-    Step 1 - Create a hidden host container Titanium Window object
-        var molpayView = Titanium.UI.createView({
-            width: 0,
-            height: 0
-        });
-    
-    Step 2 - Repeat Installation procedures from 3 - 5.
-    
-    Step 3 - Start the status request procedure.
-    molpay.transactionRequest(paymentDetails, molpayCallback);
-
 ## Support
 
 Submit issue to this repository or email to our support@molpay.com
