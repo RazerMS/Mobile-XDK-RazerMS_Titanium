@@ -66,6 +66,7 @@ var paymentDetails = {
 	'mp_editing_enabled' : false, // Optional String.
 	'mp_transaction_id' : '', // For transaction request use only, do not use this on payment process
 	'mp_request_type' : '' // Optional, set 'Status' when performing a transactionRequest
+	// 'mp_preferred_token' : '' // Optional, set the token id to nominate a preferred token as the default selection
 	// 'mp_bin_lock' : ['414170', '414171'], // Optional for credit card BIN restrictions
 	// 'mp_bin_lock_err_msg' : 'Only UOB allowed' // Optional for credit card BIN restrictions
 	// 'mp_is_escrow' : '' // Optional for Escrow, put "1" to enable escrow
