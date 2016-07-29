@@ -112,10 +112,13 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
             
         // For transaction request use only, do not use this on payment process
         'mp_transaction_id' : '', // Optional, provide a valid cash channel transaction id here will display a payment instruction screen.
-        'mp_request_type' : '' // Optional, set 'Status' when performing a transactionRequest
+        'mp_request_type' : '', // Optional, set 'Status' when performing a transactionRequest
     
         // Optional, set the token id to nominate a preferred token as the default selection
-        'mp_preferred_token': ''
+        'mp_preferred_token': '',
+    
+        // Optional, credit card transaction type, set "AUTH" to authorize the transaction
+        'mp_tcctype': ''
     };
 
 ## Start the payment module
