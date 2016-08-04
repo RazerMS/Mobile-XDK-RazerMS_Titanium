@@ -118,7 +118,10 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
         'mp_preferred_token': '',
     
         // Optional, credit card transaction type, set "AUTH" to authorize the transaction
-        'mp_tcctype': ''
+        'mp_tcctype': '',
+    
+        // Optional, set true to process this transaction through the recurring api, please refer the MOLPay Recurring API pdf 
+        'mp_is_recurring': false
     };
 
 ## Start the payment module

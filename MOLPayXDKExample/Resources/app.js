@@ -71,7 +71,8 @@ var paymentDetails = {
 	// 'mp_bin_lock_err_msg' : 'Only UOB allowed' // Optional for credit card BIN restrictions
 	// 'mp_is_escrow' : '' // Optional for Escrow, put "1" to enable escrow
 	// 'mp_filter' : '0', // Optional for debit card payment only 
-	// 'mp_custom_css_url' : Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'custom.css').nativePath // Optional for custom UI
+	// 'mp_custom_css_url' : Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'custom.css').nativePath, // Optional for custom UI
+	// 'mp_is_recurring' : false // Optional, set true to process this transaction through the recurring api, please refer the MOLPay Recurring API pdf 
 };
 
 var molpayCallback = function (transactionResult) {
