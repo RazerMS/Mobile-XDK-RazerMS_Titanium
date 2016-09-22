@@ -121,7 +121,13 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
         'mp_tcctype': '',
     
         // Optional, set true to process this transaction through the recurring api, please refer the MOLPay Recurring API pdf 
-        'mp_is_recurring': false
+        'mp_is_recurring': false,
+    
+        // Optional for channels restriction
+        'mp_allowed_channels': ['credit', 'credit3'],
+    
+        // Optional for sandboxed development environment, set boolean value to enable.
+        'mp_sandbox_mode': true
     };
 
 ## Start the payment module

@@ -42,6 +42,9 @@
   </ios>
   <android 
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <manifest>
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    </manifest>
   </android>
   <mobileweb>
     <precache></precache>
