@@ -75,6 +75,7 @@ var paymentDetails = {
 	// 'mp_is_recurring' : false // Optional, set true to process this transaction through the recurring api, please refer the MOLPay Recurring API pdf 
 	// 'mp_allowed_channels', ['credit', 'credit3'], // Optional for channels restriction 
 	// 'mp_sandbox_mode' : false // Optional for sandboxed development environment, set boolean value to enable. 
+	// 'mp_express_mode' : true // Optional, required a valid mp_channel value, this will skip the payment info page and go direct to the payment screen.
 };
 
 var molpayCallback = function (transactionResult) {

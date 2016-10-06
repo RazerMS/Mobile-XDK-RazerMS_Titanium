@@ -27,16 +27,20 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     Step 1 - Import MOLPay modules
     Drag and drop MOLPayXDK.js and molpay-mobile-xdk-www folder into the Resources folder in the application project folder (same level as the app.js) to perform all imports. Please copy both file and folder into the project.
     
-    Step 2 - Create a host container Titanium Window object
+    Step 2 - For iOS 10 and above, add the following to the iOS plist through the tiapp.xml, this is required as the app will crash at the image save procedures if not implemented.
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Payment images</string>
+    
+    Step 3 - Create a host container Titanium Window object
     var hostWin = Ti.UI.createWindow();
     
-    Step 3 - Instantiate MOLPay object
+    Step 4 - Instantiate MOLPay object
     var molpay = require('MOLPayXDK');
     
-    Step 4 - Create a view container Titanium View object for MOLPay payment UI
+    Step 5 - Create a view container Titanium View object for MOLPay payment UI
     var molpayView = Titanium.UI.createView();
     
-    Step 5 - Add MOLPay view into the Host Window container
+    Step 6 - Add MOLPay view into the Host Window container
     hostWin.add(molpayView);
 
 ## Payment module callback
@@ -114,6 +118,9 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
         'mp_transaction_id' : '', // Optional, provide a valid cash channel transaction id here will display a payment instruction screen.
         'mp_request_type' : '', // Optional, set 'Status' when performing a transactionRequest
     
+        // Optional, use this to customize the UI theme for the payment info screen, the original XDK custom.css file is provided at Example project source for reference and implementation.
+        'mp_custom_css_url' : Ti.Filesystem.getFile(Ti.Filesystem.resourcesDirectory, 'custom.css').nativePath,
+    
         // Optional, set the token id to nominate a preferred token as the default selection, set "new" to allow new card only
         'mp_preferred_token': '',
     
@@ -127,7 +134,10 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
         'mp_allowed_channels': ['credit', 'credit3'],
     
         // Optional for sandboxed development environment, set boolean value to enable.
-        'mp_sandbox_mode': true
+        'mp_sandbox_mode': true,
+    
+        // Optional, required a valid mp_channel value, this will skip the payment info page and go direct to the payment screen.
+        'mp_express_mode': true
     };
 
 ## Start the payment module
