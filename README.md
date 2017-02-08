@@ -143,7 +143,19 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
         'mp_advanced_email_validation_enabled': true,
     
         // Optional, enable this for extended phone format validation based on Google i18n standards.
-        'mp_advanced_phone_validation_enabled': true
+        'mp_advanced_phone_validation_enabled': true,
+    
+        // Optional, explicitly force disable billing name edit.
+        'mp_bill_name_edit_disabled': true,
+    
+        // Optional, explicitly force disable billing email edit.
+        'mp_bill_email_edit_disabled': true,
+    
+        // Optional, explicitly force disable billing mobile edit.
+        'mp_bill_mobile_edit_disabled': true,
+    
+        // Optional, explicitly force disable billing description edit.
+        'mp_bill_description_edit_disabled': true
     };
 
 ## Start the payment module
