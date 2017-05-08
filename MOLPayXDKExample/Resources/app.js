@@ -77,7 +77,13 @@ var paymentDetails = {
 	// 'mp_sandbox_mode' : false, // Optional for sandboxed development environment, set boolean value to enable. 
 	// 'mp_express_mode' : true, // Optional, required a valid mp_channel value, this will skip the payment info page and go direct to the payment screen.
 	// 'mp_advanced_email_validation_enabled': true, // Optional, enable this for extended email format validation based on W3C standards.
-	// 'mp_advanced_phone_validation_enabled': true // Optional, enable this for extended phone format validation based on Google i18n standards.
+	// 'mp_advanced_phone_validation_enabled': true, // Optional, enable this for extended phone format validation based on Google i18n standards.
+	// 'mp_bill_name_edit_disabled': true, // Optional, explicitly force disable billing name edit.
+    // 'mp_bill_email_edit_disabled': true, // Optional, explicitly force disable billing email edit.
+    // 'mp_bill_mobile_edit_disabled': true, // Optional, explicitly force disable billing mobile edit.
+    // 'mp_bill_description_edit_disabled': true, // Optional, explicitly force disable billing description edit.
+    // 'mp_language': 'EN', // Optional, EN, MS, VI, TH, FIL, MY, KM, ID, ZH.
+    // 'mp_dev_mode': false // Optional, enable for online sandbox testing.
 };
 
 var molpayCallback = function (transactionResult) {
