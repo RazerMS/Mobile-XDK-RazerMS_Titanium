@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app 
   xmlns:ti="http://ti.appcelerator.org">
-  <id>com.molpay.mobile.xdk.titanium.example</id>
+  <id>com.molpayxdkexample</id>
   <name>MOLPayXDKExample</name>
   <version>1.0</version>
   <publisher>not specified</publisher>
@@ -12,10 +12,11 @@
   <fullscreen>false</fullscreen>
   <navbar-hidden>false</navbar-hidden>
   <analytics>true</analytics>
-  <guid>530df6a9-3f26-4c2d-9111-096aa2189466</guid>
+  <guid>828736db-4cbf-4963-9bbb-721f4bf0c26d</guid>
   <property name="ti.ui.defaultunit" type="string">dp</property>
   <ios>
     <enable-launch-screen-storyboard>true</enable-launch-screen-storyboard>
+    <use-app-thinning>true</use-app-thinning>
     <plist>
       <dict>
         <key>UISupportedInterfaceOrientations~iphone</key>
@@ -37,6 +38,8 @@
         <false/>
         <key>UIStatusBarStyle</key>
         <string>UIStatusBarStyleDefault</string>
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>Payment images</string>
       </dict>
     </plist>
   </ios>
@@ -61,25 +64,25 @@
     <target device="android">true</target>
     <target device="ipad">true</target>
     <target device="iphone">true</target>
-    <target device="mobileweb">false</target>
-    <target device="windows">false</target>
+    <target device="mobileweb">true</target>
+    <target device="windows">true</target>
   </deployment-targets>
-  <sdk-version>5.2.2.GA</sdk-version>
-  <property name="appc-app-id" type="string">570ca63eab7a89f1137934ab</property>
+  <sdk-version>6.1.1.GA</sdk-version>
+  <property name="appc-app-id" type="string">59530f46a4bc9c439b7c5a4a</property>
   <property name="acs-authbase-url-development" type="string">https://secure-identity.cloud.appcelerator.com</property>
   <property name="acs-base-url-development" type="string">https://api.cloud.appcelerator.com</property>
-  <property name="acs-oauth-secret-development" type="string">NiiIbRH6JT4KDEnuoGoIz7Kck9wqeCPV</property>
-  <property name="acs-oauth-key-development" type="string">N0lSlvlVJHzHRHDvu8jaI8bnNisGqk8z</property>
-  <property name="acs-api-key-development" type="string">BzuaIYhxwy2BWkIyuFbPPE3q1NyowIWo</property>
+  <property name="acs-oauth-secret-development" type="string">SXw5a5Tl1qBVBdMPtxG3ENcMrSHrDoGj</property>
+  <property name="acs-oauth-key-development" type="string">oheX8OfXPh3gcRKer0B2vznumMon1Bnh</property>
+  <property name="acs-api-key-development" type="string">5CuQKVl6g2251V62Zpkn6VzKGACK4PLQ</property>
   <property name="acs-username-development" type="string">appc_app_user_dev</property>
-  <property name="acs-password-development" type="string">oeOaqpynBs4DGBWMBk</property>
+  <property name="acs-password-development" type="string">qywiBF96iTHBmTU0yP</property>
   <property name="acs-authbase-url-production" type="string">https://secure-identity.cloud.appcelerator.com</property>
   <property name="acs-base-url-production" type="string">https://api.cloud.appcelerator.com</property>
-  <property name="acs-oauth-secret-production" type="string">6HGWC1RAnRVLFxuG3EYR01VBkkBhgcCs</property>
-  <property name="acs-oauth-key-production" type="string">ksnaVvn6r4y57KyZ2jOKOplwvxqBtuxY</property>
-  <property name="acs-api-key-production" type="string">lT8VE9zMVm5lfER6GPzaKjYADaITwyDi</property>
+  <property name="acs-oauth-secret-production" type="string">cAIokbbrNvu6eDlq8GwCqdnQHF3dha1v</property>
+  <property name="acs-oauth-key-production" type="string">X97PZQHFoweOUBGVSi8IRPxbVJPWGOEg</property>
+  <property name="acs-api-key-production" type="string">ive7C5bXwP3nUpzcOaMm1TjRMGKHRn0T</property>
   <property name="acs-username-production" type="string">appc_app_user</property>
-  <property name="acs-password-production" type="string">yAQ6GjaqETDrpU0gzn</property>
-  <property name="appc-org-id" type="string">100109136</property>
+  <property name="acs-password-production" type="string">jIUzZICud3BEuy1Em6</property>
+  <property name="appc-org-id" type="string">387008613789384</property>
   <property name="appc-creator-user-id" type="string">6be17bd9-ab54-440c-b98f-80d4d86b62ab</property>
 </ti:app>
