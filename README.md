@@ -95,7 +95,7 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
         'mp_country' : 'MY',  
             
         // Optional String.
-        'mp_channel' : '', // Use 'multi' for all available channels option. For individual channel seletion, please refer to "Channel Parameter" in "Channel Lists" in the MOLPay API Spec for Merchant pdf. 
+        'mp_channel' : '', // Use 'multi' for all available channels option. For individual channel seletion, please refer to https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/channel_list.tsv.
         'mp_bill_description' : '',
         'mp_bill_name' : '',
         'mp_bill_email' : '',
