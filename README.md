@@ -28,6 +28,8 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     Step 2 - For iOS 10 and above, add the following to the iOS plist through the tiapp.xml, this is required as the app will crash at the image save procedures if not implemented.
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Payment images</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Payment images</string>
     
     Step 3 - Create a host container Titanium Window object
     var hostWin = Ti.UI.createWindow();
