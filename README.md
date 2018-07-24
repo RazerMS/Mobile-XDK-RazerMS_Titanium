@@ -4,17 +4,17 @@
 
 <img src="https://user-images.githubusercontent.com/38641542/39353138-654385dc-4a39-11e8-9710-19e5f03ec62e.jpg">
 
-# molpay-mobile-xdk-titanium
+# molpay-mobile-xdk-xamarin-forms
 
-This is the complete and functional MOLPay Titanium payment module that is ready to be implemented into Titanium project through simple copy and paste procedures. An example application project (MOLPayXDKExample) is provided for MOLPayXDK Titanium integration reference.
+This is the complete and functional MOLPay Xamarin Forms payment module that is ready to be implemented into Xamarin Forms project through simple copy and paste procedures. An example application project (MPayXDKExample) is provided for MOLPayXDK Xamarin Forms integration reference.
 
-This plugin provides an integrated MOLPay payment module that contains a wrapper 'MOLPayXDK.js' and an upgradable core as the 'molpay-mobile-xdk-www' folder, which the latter can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www and update the local version.
+This plugin provides an integrated MOLPay payment module that contains a wrapper 'MOLPayXDK.cs' and an upgradable core as the 'molpay-mobile-xdk-www' folder, which the latter can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www and update the local version.
 
 ## Recommended configurations
 
-    - Titanium SDK Version: 5.2.2.GA ++
+    - Microsoft Visual Studio 2017 Community Version: 7 ++ (For Mac)
     
-    - Node.js Version: 5.3.0 ++
+    - Microsoft Visual Studio 2017 (For Windows)
     
     - Minimum Android target version: Android 4.4
     
@@ -23,31 +23,50 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 ## Installation
 
     Step 1 - Import MOLPay modules
-    Drag and drop MOLPayXDK.js and molpay-mobile-xdk-www folder into the Resources folder in the application project folder (same level as the app.js) to perform all imports. Please copy both file and folder into the project.
     
-    Step 2 - For iOS 10 and above, add the following to the iOS plist through the tiapp.xml, this is required as the app will crash at the image save procedures if not implemented.
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Payment images</string>
-    <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>Payment images</string>
+    For the Form App,
+    - Add MOLPayXDK.cs into the FORMS project folder
     
-    Step 3 - Create a host container Titanium Window object
-    var hostWin = Ti.UI.createWindow();
+    For Android, 
+    - add MOLPayExtensionForAndroid.cs into the FORMS project folder
+    - add molpay-mobile-xdk-www into Assets folder, then use Build Action option at all sub files and set as AndroidAsset.
     
-    Step 4 - Instantiate MOLPay object
-    var molpay = require('MOLPayXDK');
+    For iOS, 
+    - add MOLPayExtensionForIOS.cs into the FORMS project folder
+    - add molpay-mobile-xdk-www into Resources folder.
     
-    Step 5 - Create a view container Titanium View object for MOLPay payment UI
-    var molpayView = Titanium.UI.createView();
+    Step 2 - Add Package dependancies
+    Add Json.NET from Official NuGet Gallery
     
-    Step 6 - Add MOLPay view into the Host Window container
-    hostWin.add(molpayView);
+    Step 3 - Import Namespaces, add following statements
+    using System.Collections.Generic;
+    using MOLPayXDK;
+    
+    Step 4 - Update Namespace at MOLPayXDK.cs
+    namespace MPayXDKExample //Update to your project namespace accordingly
+    
+    Step 5 - Add callback function for transaction results,
+    private void MolpayCallback(string transactionResult) {}
+    
+    Step 6 - Additional native implementations 
+    
+    For iOS,
+    - Add 'NSAppTransportSecurity' > Allow Arbitrary Loads > YES' to the application project info.plist
+    - Add 'NSPhotoLibraryUsageDescription' > 'Payment images' to the application project info.plist
+    - Add 'NSPhotoLibraryAddUsageDescription' > 'Payment images' to the application project info.plist
+
+    For Android,
+    - Add DependencyService.Get<MOLPayExtension>().SetMOLPayContext(this); to the MainActivity.cs after LoadApplication(new App());
+    - Check WriteExternalStorage option at the AndroidManifest.xml's Required Permission
+    
+    Step 7 - Restore Android platform packages is necessary (Optional) 
 
 ## Payment module callback
 
-    var molpayCallback = function (transactionResult) {
-        alert('molpayCallback transactionResult = '+transactionResult);
-    };
+    private void MolpayCallback(string transactionResult)
+        {
+            System.Diagnostics.Debug.WriteLine("transactionResult = {0}", transactionResult);
+        }
     
     =========================================
     Sample transaction result in JSON string:
@@ -82,133 +101,121 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
 ## Prepare the Payment detail object
 
-    var paymentDetails = {
+    var paymentDetails = new Dictionary<string, object> {
         // Optional, REQUIRED when use online Sandbox environment and account credentials.
-        'mp_dev_mode': false,
+        { "mp_dev_mode", false }
         
         // Mandatory String. Values obtained from MOLPay.
-        'mp_username' : 'username',
-        'mp_password' : 'password',
-        'mp_merchant_ID' : 'merchantid',
-        'mp_app_name' : 'appname',
-        'mp_verification_key' : 'vkey123', 
+        { "mp_username", "username" },
+        { "mp_password", "password" },
+        { "mp_merchant_ID", "merchantid" },
+        { "mp_app_name", "appname" },
+        { "mp_verification_key", "vkey123" },
         
         // Mandatory String. Payment values.
-        'mp_amount' : '1.10',, // Minimum 1.01
-        'mp_order_ID' : 'orderid123', 
-        'mp_currency' : 'MYR',
-        'mp_country' : 'MY',
+        { "mp_amount", "1.10" }, // Minimum 1.01
+        { "mp_order_ID", "orderid123" }, 
+        { "mp_currency", "MYR" },
+        { "mp_country", "MY" },
             
         // Optional, but required payment values. User input will be required when values not passed.
-        'mp_channel' : 'multi', // Use 'multi' for all available channels option. For individual channel seletion, please refer to https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/channel_list.tsv.
-        'mp_bill_description' : 'billdesc',
-        'mp_bill_name' : 'billname',
-        'mp_bill_email' : 'email@domain.com',
-        'mp_bill_mobile' : '+1234567',
+        { "mp_channel", "multi" }, // Use 'multi' for all available channels option. For individual channel seletion, please refer to https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/channel_list.tsv.
+        { "mp_bill_description", "billdesc" },
+        { "mp_bill_name", "billname" },
+        { "mp_bill_email", "email@domain.com" },
+        { "mp_bill_mobile", "+1234567" },
         
         // Optional, allow channel selection. 
-        'mp_channel_editing' : false,
+        { "mp_channel_editing", false },
         
         // Optional, allow billing information editing.
-        'mp_editing_enabled' : false,
+        { "mp_editing_enabled", false },
         
         // Optional, for Escrow.
-        'mp_is_escrow': '0', // Put "1" to enable escrow
+        { "mp_is_escrow", "" }, // Put "1" to enable escrow
         
         // Optional, for credit card BIN restrictions and campaigns.
-        'mp_bin_lock' : ['414170', '414171'],   
+        { "mp_bin_lock", new string[]{"414170", "414171"} }, 
         
         // Optional, for mp_bin_lock alert error.
-        'mp_bin_lock_err_msg': 'Only UOB allowed',
+        { "mp_bin_lock_err_msg", "Only UOB allowed" },
             
         // WARNING! FOR TRANSACTION QUERY USE ONLY, DO NOT USE THIS ON PAYMENT PROCESS.
         // Optional, provide a valid cash channel transaction id here will display a payment instruction screen. Required if mp_request_type is 'Receipt'.
-        'mp_transaction_id': '',
+        { "mp_transaction_id", "" },
         // Optional, use 'Receipt' for Cash channels, and 'Status' for transaction status query.
-        'mp_request_type': '',
+        { "mp_request_type", "" },
         
         // Optional, use this to customize the UI theme for the payment info screen, the original XDK custom.css file can be obtained at https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/custom.css.
-        'mp_custom_css_url': cordova.file.applicationDirectory + 'www/custom.css',
+        { "mp_custom_css_url", System.IO.Path.Combine (DependencyService.Get<MOLPayExtension>().GetAssetPath(), "custom.css") },
         
         // Optional, set the token id to nominate a preferred token as the default selection, set "new" to allow new card only.
-        'mp_preferred_token': '',
+        { "mp_preferred_token", "" },
         
         // Optional, credit card transaction type, set "AUTH" to authorize the transaction.
-        'mp_tcctype': '',
+        { "mp_tcctype", "" },
         
         // Optional, required valid credit card channel, set true to process this transaction through the recurring api, please refer the MOLPay Recurring API pdf. 
-        'mp_is_recurring': false,
+        { "mp_is_recurring", false },
         
         // Optional, show nominated channels.
-        'mp_allowed_channels': ['credit', 'credit3'],
+        { "mp_allowed_channels", new string[]{"credit", "credit3"} },
         
         // Optional, simulate offline payment, set boolean value to enable. 
-        'mp_sandbox_mode': true,
+        { "mp_sandbox_mode", true },
         
         // Optional, required a valid mp_channel value, this will skip the payment info page and go direct to the payment screen.
-        'mp_express_mode': true,
+        { "mp_express_mode", true },
         
         // Optional, extended email format validation based on W3C standards.
-        'mp_advanced_email_validation_enabled': true,
+        { "mp_advanced_email_validation_enabled", true },
         
         // Optional, extended phone format validation based on Google i18n standards.
-        'mp_advanced_phone_validation_enabled': true,
+        { "mp_advanced_phone_validation_enabled", true },
         
         // Optional, explicitly force disable user input.
-        'mp_bill_name_edit_disabled': true,
-        'mp_bill_email_edit_disabled': true,
-        'mp_bill_mobile_edit_disabled': true,
-        'mp_bill_description_edit_disabled': true,
+        { "mp_bill_name_edit_disabled", true },
+        { "mp_bill_email_edit_disabled", true },
+        { "mp_bill_mobile_edit_disabled", true },
+        { "mp_bill_description_edit_disabled", true },
         
         // Optional, EN, MS, VI, TH, FIL, MY, KM, ID, ZH.
-        'mp_language': 'EN',
+        { "mp_language", "EN" },
         
         // Optional, Cash channel payment request expiration duration in hour.
-        'mp_cash_waittime': 48,
+        { "mp_cash_waittime", 48 },
             
         // Optional, allow bypass of 3DS on some credit card channels.
-        'mp_non_3DS': true,
+        { "mp_non_3DS", true },
         
         // Optional, disable card list option.
-        'mp_card_list_disabled': true,
+        { "mp_card_list_disabled", true },
         
         // Optional for channels restriction, this option has less priority than mp_allowed_channels.
-        'mp_disabled_channels': ['credit']  
+        { "mp_disabled_channels", new string[]{"credit"} }
+        
     };
 
 ## Start the payment module
 
-    Step 1 - Pass the molpayview Titanium View Container to MOLPay object
-    molpay.setMolpayView(molpayView);
+    Step 1 - Initiate MOLPay payment module, pass in required parameters below
+    var molpay = new MOLPay(DependencyService.Get<MOLPayExtension>().GetAssetPath(), paymentDetails, MolpayCallback);
     
-    Step 2 - Start the payment UI with payment details and callback function
-    molpay.startMolpay(paymentDetails, molpayCallback);
-    
-    Step 3 - Host open Window
-    hostWin.open();
+    Step 2 - Add MOLPay payment UI to the main layout
+    mainLayout.Children.Add(molpay);
 
 ## Close the payment module UI
 
-    molpay.closeMolpay();
+    molpay.CloseMolpay();
     
     * Notes: closeMolpay does not close remove the UI, the host application must implement it's own mechanism to close the payment module UI, 
     
     * Example: Implementing MOLPay closing mechanism at host app
-    closeButton = Titanium.UI.createButton({
-        title: 'Close',
-        top: 0,
-        width: 100,
-        height: 50,
-        right: 0,
-        backgroundColor: '#72529b',
-        color: 'white'
-    });
-    
-    closeButton.addEventListener('click', function () {
-        molpay.closeMolpay();
-        hostWin.remove(molpayView);
-    });
-    hostWin.add(closeButton);
+    private void OnCloseButtonClicked(object sender, EventArgs e)
+        {
+            this.molpay.CloseMolpay();
+            mainLayout.Children.Remove(this.molpay);
+        }
     
     * The close event will also return a final result.
 
