@@ -21,7 +21,7 @@ This plugin provides an integrated Razer Merchant Services payment module that c
 - Minimum iOS target version: 7.0
 
 ## Installation
-
+```
 Step 1 - Import Razer Merchant Services modules
 Drag and drop MOLPayXDK.js and molpay-mobile-xdk-www folder into the Resources folder in the application project folder (same level as the app.js) to perform all imports. Please copy both file and folder into the project.
 
@@ -42,9 +42,9 @@ var molpayView = Titanium.UI.createView();
 
 Step 6 - Add Razer Merchant Services view into the Host Window container
 hostWin.add(molpayView);
-
+```
 ## Payment module callback
-
+```
 var molpayCallback = function (transactionResult) {
 alert('molpayCallback transactionResult = '+transactionResult);
 };
@@ -79,9 +79,9 @@ Parameter and meaning:
 1) Internet not available
 2) API credentials (username, password, merchant id, verify key)
 3) Razer Merchant Services server offline.
-
+```
 ## Prepare the Payment detail object
-
+```
 var paymentDetails = {
 // Optional, REQUIRED when use online Sandbox environment and account credentials.
 'mp_dev_mode': false,
@@ -175,9 +175,9 @@ var paymentDetails = {
 // Optional for channels restriction, this option has less priority than mp_allowed_channels.
 'mp_disabled_channels': ['credit']  
 };
-
+```
 ## Start the payment module
-
+```
 Step 1 - Pass the molpayview Titanium View Container to MOLPay object
 molpay.setMolpayView(molpayView);
 
@@ -186,9 +186,9 @@ molpay.startMolpay(paymentDetails, molpayCallback);
 
 Step 3 - Host open Window
 hostWin.open();
-
+```
 ## Close the payment module UI
-
+```
 molpay.closeMolpay();
 
 * Notes: closeMolpay does not close remove the UI, the host application must implement it's own mechanism to close the payment module UI, 
@@ -211,9 +211,9 @@ hostWin.remove(molpayView);
 hostWin.add(closeButton);
 
 * The close event will also return a final result.
-
+```
 ## Cash channel payment process (How does it work?)
-
+```
 This is how the cash channels work on XDK:
 
 1) The user initiate a cash payment, upon completed, the XDK will pause at the “Payment instruction” screen, the results would return a pending status.
@@ -223,15 +223,15 @@ This is how the cash channels work on XDK:
 3) When later in time, the user would arrive at say 7-Eleven to make the payment, the host app then can call the XDK again to display the “Payment Instruction” again, then it has to pass in all the payment details like it will for the standard payment process, only this time, the host app will have to also pass in an extra value in the payment details, it’s the “mp_transaction_id”, the value has to be the same transaction returned in the results from the XDK earlier during the completion of the transaction. If the transaction id provided is accurate, the XDK will instead show the “Payment Instruction" in place of the standard payment screen.
 
 4) After the user done the paying at the 7-Eleven counter, they can close and exit Razer Merchant Services XDK by clicking the “Close” button again.
-
+```
 ## XDK built-in checksum validator caveats 
-
+```
 All XDK come with a built-in checksum validator to validate all incoming checksums and return the validation result through the "mp_secured_verified" parameter. However, this mechanism will fail and always return false if merchants are implementing the private secret key (which the latter is highly recommended and prefereable.) If you would choose to implement the private secret key, you may ignore the "mp_secured_verified" and send the checksum back to your server for validation. 
-
+```
 ## Private Secret Key checksum validation formula
-
+```
 chksum = MD5(mp_merchant_ID + results.msgType + results.txn_ID + results.amount + results.status_code + merchant_private_secret_key)
-
+```
 ## Support
 
 Submit issue to this repository or email to our support-sa@razer.com
