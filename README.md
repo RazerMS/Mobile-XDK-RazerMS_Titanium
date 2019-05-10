@@ -4,249 +4,242 @@
 
 <img src="https://user-images.githubusercontent.com/38641542/39353138-654385dc-4a39-11e8-9710-19e5f03ec62e.jpg">
 
-# rms-mobile-xdk-xamarin-forms
+# rms-mobile-xdk-titanium
 
-This is the complete and functional Razer Merchant Services Xamarin Forms payment module that is ready to be implemented into Xamarin Forms project through simple copy and paste procedures. An example application project (MPayXDKExample) is provided for MOLPayXDK Xamarin Forms integration reference.
+This is the complete and functional Razer Merchant Services Titanium payment module that is ready to be implemented into Titanium project through simple copy and paste procedures. An example application project (MOLPayXDKExample) is provided for Razer Merchant Services XDK Titanium integration reference.
 
-This plugin provides an integrated MOLPay payment module that contains a wrapper 'MOLPayXDK.cs' and an upgradable core as the 'molpay-mobile-xdk-www' folder, which the latter can be separately downloaded at https://github.com/MOLPay/rms-mobile-xdk-www and update the local version.
+This plugin provides an integrated Razer Merchant Services payment module that contains a wrapper 'MOLPayXDK.js' and an upgradable core as the 'molpay-mobile-xdk-www' folder, which the latter can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www and update the local version.
 
 ## Recommended configurations
 
-    - Microsoft Visual Studio 2017 Community Version: 7 ++ (For Mac)
-    
-    - Microsoft Visual Studio 2017 (For Windows)
-    
-    - Minimum Android target version: Android 4.4
-    
-    - Minimum iOS target version: 7.0
+- Titanium SDK Version: 5.2.2.GA ++
+
+- Node.js Version: 5.3.0 ++
+
+- Minimum Android target version: Android 4.4
+
+- Minimum iOS target version: 7.0
 
 ## Installation
 
-    Step 1 - Import MOLPay modules
-    
-    For the Form App,
-    - Add MOLPayXDK.cs into the FORMS project folder
-    
-    For Android, 
-    - add MOLPayExtensionForAndroid.cs into the FORMS project folder
-    - add molpay-mobile-xdk-www into Assets folder, then use Build Action option at all sub files and set as AndroidAsset.
-    
-    For iOS, 
-    - add MOLPayExtensionForIOS.cs into the FORMS project folder
-    - add molpay-mobile-xdk-www into Resources folder.
-    
-    Step 2 - Add Package dependancies
-    Add Json.NET from Official NuGet Gallery
-    
-    Step 3 - Import Namespaces, add following statements
-    using System.Collections.Generic;
-    using MOLPayXDK;
-    
-    Step 4 - Update Namespace at MOLPayXDK.cs
-    namespace MPayXDKExample //Update to your project namespace accordingly
-    
-    Step 5 - Add callback function for transaction results,
-    private void MolpayCallback(string transactionResult) {}
-    
-    Step 6 - Additional native implementations 
-    
-    For iOS,
-    - Add 'NSAppTransportSecurity' > Allow Arbitrary Loads > YES' to the application project info.plist
-    - Add 'NSPhotoLibraryUsageDescription' > 'Payment images' to the application project info.plist
-    - Add 'NSPhotoLibraryAddUsageDescription' > 'Payment images' to the application project info.plist
+Step 1 - Import Razer Merchant Services modules
+Drag and drop MOLPayXDK.js and molpay-mobile-xdk-www folder into the Resources folder in the application project folder (same level as the app.js) to perform all imports. Please copy both file and folder into the project.
 
-    For Android,
-    - Add DependencyService.Get<MOLPayExtension>().SetMOLPayContext(this); to the MainActivity.cs after LoadApplication(new App());
-    - Check WriteExternalStorage option at the AndroidManifest.xml's Required Permission
-    
-    Step 7 - Restore Android platform packages is necessary (Optional) 
+Step 2 - For iOS 10 and above, add the following to the iOS plist through the tiapp.xml, this is required as the app will crash at the image save procedures if not implemented.
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Payment images</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>Payment images</string>
+
+Step 3 - Create a host container Titanium Window object
+var hostWin = Ti.UI.createWindow();
+
+Step 4 - Instantiate Razer Merchant Services object
+var molpay = require('MOLPayXDK');
+
+Step 5 - Create a view container Titanium View object for Razer Merchant Services payment UI
+var molpayView = Titanium.UI.createView();
+
+Step 6 - Add Razer Merchant Services view into the Host Window container
+hostWin.add(molpayView);
 
 ## Payment module callback
 
-    private void MolpayCallback(string transactionResult)
-        {
-            System.Diagnostics.Debug.WriteLine("transactionResult = {0}", transactionResult);
-        }
-    
-    =========================================
-    Sample transaction result in JSON string:
-    =========================================
-    
-    {"status_code":"11","amount":"1.01","chksum":"34a9ec11a5b79f31a15176ffbcac76cd","pInstruction":0,"msgType":"C6","paydate":1459240430,"order_id":"3q3rux7dj","err_desc":"","channel":"Credit","app_code":"439187","txn_ID":"6936766"}
-    
-    Parameter and meaning:
-    
-    "status_code" - "00" for Success, "11" for Failed, "22" for *Pending. 
-    (*Pending status only applicable to cash channels only)
-    "amount" - The transaction amount
-    "paydate" - The transaction date
-    "order_id" - The transaction order id
-    "channel" - The transaction channel description
-    "txn_ID" - The transaction id generated by MOLPay
-    
-    * Notes: You may ignore other parameters and values not stated above
-    
-    =====================================
-    * Sample error result in JSON string:
-    =====================================
-    
-    {"Error":"Communication Error"}
-    
-    Parameter and meaning:
-    
-    "Communication Error" - Error starting a payment process due to several possible reasons, please contact MOLPay support should the error persists.
-    1) Internet not available
-    2) API credentials (username, password, merchant id, verify key)
-    3) MOLPay server offline.
+var molpayCallback = function (transactionResult) {
+alert('molpayCallback transactionResult = '+transactionResult);
+};
+
+=========================================
+Sample transaction result in JSON string:
+=========================================
+
+{"status_code":"11","amount":"1.01","chksum":"34a9ec11a5b79f31a15176ffbcac76cd","pInstruction":0,"msgType":"C6","paydate":1459240430,"order_id":"3q3rux7dj","err_desc":"","channel":"Credit","app_code":"439187","txn_ID":"6936766"}
+
+Parameter and meaning:
+
+"status_code" - "00" for Success, "11" for Failed, "22" for *Pending. 
+(*Pending status only applicable to cash channels only)
+"amount" - The transaction amount
+"paydate" - The transaction date
+"order_id" - The transaction order id
+"channel" - The transaction channel description
+"txn_ID" - The transaction id generated by Razer Merchant Services
+
+* Notes: You may ignore other parameters and values not stated above
+
+=====================================
+* Sample error result in JSON string:
+=====================================
+
+{"Error":"Communication Error"}
+
+Parameter and meaning:
+
+"Communication Error" - Error starting a payment process due to several possible reasons, please contact Razer Merchant Services support should the error persists.
+1) Internet not available
+2) API credentials (username, password, merchant id, verify key)
+3) Razer Merchant Services server offline.
 
 ## Prepare the Payment detail object
 
-    var paymentDetails = new Dictionary<string, object> {
-        // Optional, REQUIRED when use online Sandbox environment and account credentials.
-        { "mp_dev_mode", false }
-        
-        // Mandatory String. Values obtained from MOLPay.
-        { "mp_username", "username" },
-        { "mp_password", "password" },
-        { "mp_merchant_ID", "merchantid" },
-        { "mp_app_name", "appname" },
-        { "mp_verification_key", "vkey123" },
-        
-        // Mandatory String. Payment values.
-        { "mp_amount", "1.10" }, // Minimum 1.01
-        { "mp_order_ID", "orderid123" }, 
-        { "mp_currency", "MYR" },
-        { "mp_country", "MY" },
-            
-        // Optional, but required payment values. User input will be required when values not passed.
-        { "mp_channel", "multi" }, // Use 'multi' for all available channels option. For individual channel seletion, please refer to https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/channel_list.tsv.
-        { "mp_bill_description", "billdesc" },
-        { "mp_bill_name", "billname" },
-        { "mp_bill_email", "email@domain.com" },
-        { "mp_bill_mobile", "+1234567" },
-        
-        // Optional, allow channel selection. 
-        { "mp_channel_editing", false },
-        
-        // Optional, allow billing information editing.
-        { "mp_editing_enabled", false },
-        
-        // Optional, for Escrow.
-        { "mp_is_escrow", "" }, // Put "1" to enable escrow
-        
-        // Optional, for credit card BIN restrictions and campaigns.
-        { "mp_bin_lock", new string[]{"414170", "414171"} }, 
-        
-        // Optional, for mp_bin_lock alert error.
-        { "mp_bin_lock_err_msg", "Only UOB allowed" },
-            
-        // WARNING! FOR TRANSACTION QUERY USE ONLY, DO NOT USE THIS ON PAYMENT PROCESS.
-        // Optional, provide a valid cash channel transaction id here will display a payment instruction screen. Required if mp_request_type is 'Receipt'.
-        { "mp_transaction_id", "" },
-        // Optional, use 'Receipt' for Cash channels, and 'Status' for transaction status query.
-        { "mp_request_type", "" },
-        
-        // Optional, use this to customize the UI theme for the payment info screen, the original XDK custom.css file can be obtained at https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/custom.css.
-        { "mp_custom_css_url", System.IO.Path.Combine (DependencyService.Get<MOLPayExtension>().GetAssetPath(), "custom.css") },
-        
-        // Optional, set the token id to nominate a preferred token as the default selection, set "new" to allow new card only.
-        { "mp_preferred_token", "" },
-        
-        // Optional, credit card transaction type, set "AUTH" to authorize the transaction.
-        { "mp_tcctype", "" },
-        
-        // Optional, required valid credit card channel, set true to process this transaction through the recurring api, please refer the MOLPay Recurring API pdf. 
-        { "mp_is_recurring", false },
-        
-        // Optional, show nominated channels.
-        { "mp_allowed_channels", new string[]{"credit", "credit3"} },
-        
-        // Optional, simulate offline payment, set boolean value to enable. 
-        { "mp_sandbox_mode", true },
-        
-        // Optional, required a valid mp_channel value, this will skip the payment info page and go direct to the payment screen.
-        { "mp_express_mode", true },
-        
-        // Optional, extended email format validation based on W3C standards.
-        { "mp_advanced_email_validation_enabled", true },
-        
-        // Optional, extended phone format validation based on Google i18n standards.
-        { "mp_advanced_phone_validation_enabled", true },
-        
-        // Optional, explicitly force disable user input.
-        { "mp_bill_name_edit_disabled", true },
-        { "mp_bill_email_edit_disabled", true },
-        { "mp_bill_mobile_edit_disabled", true },
-        { "mp_bill_description_edit_disabled", true },
-        
-        // Optional, EN, MS, VI, TH, FIL, MY, KM, ID, ZH.
-        { "mp_language", "EN" },
-        
-        // Optional, Cash channel payment request expiration duration in hour.
-        { "mp_cash_waittime", 48 },
-            
-        // Optional, allow bypass of 3DS on some credit card channels.
-        { "mp_non_3DS", true },
-        
-        // Optional, disable card list option.
-        { "mp_card_list_disabled", true },
-        
-        // Optional for channels restriction, this option has less priority than mp_allowed_channels.
-        { "mp_disabled_channels", new string[]{"credit"} }
-        
-    };
+var paymentDetails = {
+// Optional, REQUIRED when use online Sandbox environment and account credentials.
+'mp_dev_mode': false,
+
+// Mandatory String. Values obtained from Razer Merchant Services.
+'mp_username' : 'username',
+'mp_password' : 'password',
+'mp_merchant_ID' : 'merchantid',
+'mp_app_name' : 'appname',
+'mp_verification_key' : 'vkey123', 
+
+// Mandatory String. Payment values.
+'mp_amount' : '1.10',, // Minimum 1.01
+'mp_order_ID' : 'orderid123', 
+'mp_currency' : 'MYR',
+'mp_country' : 'MY',
+
+// Optional, but required payment values. User input will be required when values not passed.
+'mp_channel' : 'multi', // Use 'multi' for all available channels option. For individual channel seletion, please refer to https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/channel_list.tsv.
+'mp_bill_description' : 'billdesc',
+'mp_bill_name' : 'billname',
+'mp_bill_email' : 'email@domain.com',
+'mp_bill_mobile' : '+1234567',
+
+// Optional, allow channel selection. 
+'mp_channel_editing' : false,
+
+// Optional, allow billing information editing.
+'mp_editing_enabled' : false,
+
+// Optional, for Escrow.
+'mp_is_escrow': '0', // Put "1" to enable escrow
+
+// Optional, for credit card BIN restrictions and campaigns.
+'mp_bin_lock' : ['414170', '414171'],   
+
+// Optional, for mp_bin_lock alert error.
+'mp_bin_lock_err_msg': 'Only UOB allowed',
+
+// WARNING! FOR TRANSACTION QUERY USE ONLY, DO NOT USE THIS ON PAYMENT PROCESS.
+// Optional, provide a valid cash channel transaction id here will display a payment instruction screen. Required if mp_request_type is 'Receipt'.
+'mp_transaction_id': '',
+// Optional, use 'Receipt' for Cash channels, and 'Status' for transaction status query.
+'mp_request_type': '',
+
+// Optional, use this to customize the UI theme for the payment info screen, the original XDK custom.css file can be obtained at https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/custom.css.
+'mp_custom_css_url': cordova.file.applicationDirectory + 'www/custom.css',
+
+// Optional, set the token id to nominate a preferred token as the default selection, set "new" to allow new card only.
+'mp_preferred_token': '',
+
+// Optional, credit card transaction type, set "AUTH" to authorize the transaction.
+'mp_tcctype': '',
+
+// Optional, required valid credit card channel, set true to process this transaction through the recurring api, please refer the Razer Merchant Services Recurring API pdf. 
+'mp_is_recurring': false,
+
+// Optional, show nominated channels.
+'mp_allowed_channels': ['credit', 'credit3'],
+
+// Optional, simulate offline payment, set boolean value to enable. 
+'mp_sandbox_mode': true,
+
+// Optional, required a valid mp_channel value, this will skip the payment info page and go direct to the payment screen.
+'mp_express_mode': true,
+
+// Optional, extended email format validation based on W3C standards.
+'mp_advanced_email_validation_enabled': true,
+
+// Optional, extended phone format validation based on Google i18n standards.
+'mp_advanced_phone_validation_enabled': true,
+
+// Optional, explicitly force disable user input.
+'mp_bill_name_edit_disabled': true,
+'mp_bill_email_edit_disabled': true,
+'mp_bill_mobile_edit_disabled': true,
+'mp_bill_description_edit_disabled': true,
+
+// Optional, EN, MS, VI, TH, FIL, MY, KM, ID, ZH.
+'mp_language': 'EN',
+
+// Optional, Cash channel payment request expiration duration in hour.
+'mp_cash_waittime': 48,
+
+// Optional, allow bypass of 3DS on some credit card channels.
+'mp_non_3DS': true,
+
+// Optional, disable card list option.
+'mp_card_list_disabled': true,
+
+// Optional for channels restriction, this option has less priority than mp_allowed_channels.
+'mp_disabled_channels': ['credit']  
+};
 
 ## Start the payment module
 
-    Step 1 - Initiate MOLPay payment module, pass in required parameters below
-    var molpay = new MOLPay(DependencyService.Get<MOLPayExtension>().GetAssetPath(), paymentDetails, MolpayCallback);
-    
-    Step 2 - Add MOLPay payment UI to the main layout
-    mainLayout.Children.Add(molpay);
+Step 1 - Pass the molpayview Titanium View Container to MOLPay object
+molpay.setMolpayView(molpayView);
+
+Step 2 - Start the payment UI with payment details and callback function
+molpay.startMolpay(paymentDetails, molpayCallback);
+
+Step 3 - Host open Window
+hostWin.open();
 
 ## Close the payment module UI
 
-    molpay.CloseMolpay();
-    
-    * Notes: closeMolpay does not close remove the UI, the host application must implement it's own mechanism to close the payment module UI, 
-    
-    * Example: Implementing MOLPay closing mechanism at host app
-    private void OnCloseButtonClicked(object sender, EventArgs e)
-        {
-            this.molpay.CloseMolpay();
-            mainLayout.Children.Remove(this.molpay);
-        }
-    
-    * The close event will also return a final result.
+molpay.closeMolpay();
+
+* Notes: closeMolpay does not close remove the UI, the host application must implement it's own mechanism to close the payment module UI, 
+
+* Example: Implementing Razer Merchant Services closing mechanism at host app
+closeButton = Titanium.UI.createButton({
+title: 'Close',
+top: 0,
+width: 100,
+height: 50,
+right: 0,
+backgroundColor: '#72529b',
+color: 'white'
+});
+
+closeButton.addEventListener('click', function () {
+molpay.closeMolpay();
+hostWin.remove(molpayView);
+});
+hostWin.add(closeButton);
+
+* The close event will also return a final result.
 
 ## Cash channel payment process (How does it work?)
 
-    This is how the cash channels work on XDK:
-    
-    1) The user initiate a cash payment, upon completed, the XDK will pause at the “Payment instruction” screen, the results would return a pending status.
-    
-    2) The user can then click on “Close” to exit the MOLPay XDK aka the payment screen.
-    
-    3) When later in time, the user would arrive at say 7-Eleven to make the payment, the host app then can call the XDK again to display the “Payment Instruction” again, then it has to pass in all the payment details like it will for the standard payment process, only this time, the host app will have to also pass in an extra value in the payment details, it’s the “mp_transaction_id”, the value has to be the same transaction returned in the results from the XDK earlier during the completion of the transaction. If the transaction id provided is accurate, the XDK will instead show the “Payment Instruction" in place of the standard payment screen.
-    
-    4) After the user done the paying at the 7-Eleven counter, they can close and exit MOLPay XDK by clicking the “Close” button again.
+This is how the cash channels work on XDK:
+
+1) The user initiate a cash payment, upon completed, the XDK will pause at the “Payment instruction” screen, the results would return a pending status.
+
+2) The user can then click on “Close” to exit the Razer Merchant Services XDK aka the payment screen.
+
+3) When later in time, the user would arrive at say 7-Eleven to make the payment, the host app then can call the XDK again to display the “Payment Instruction” again, then it has to pass in all the payment details like it will for the standard payment process, only this time, the host app will have to also pass in an extra value in the payment details, it’s the “mp_transaction_id”, the value has to be the same transaction returned in the results from the XDK earlier during the completion of the transaction. If the transaction id provided is accurate, the XDK will instead show the “Payment Instruction" in place of the standard payment screen.
+
+4) After the user done the paying at the 7-Eleven counter, they can close and exit Razer Merchant Services XDK by clicking the “Close” button again.
 
 ## XDK built-in checksum validator caveats 
 
-    All XDK come with a built-in checksum validator to validate all incoming checksums and return the validation result through the "mp_secured_verified" parameter. However, this mechanism will fail and always return false if merchants are implementing the private secret key (which the latter is highly recommended and prefereable.) If you would choose to implement the private secret key, you may ignore the "mp_secured_verified" and send the checksum back to your server for validation. 
+All XDK come with a built-in checksum validator to validate all incoming checksums and return the validation result through the "mp_secured_verified" parameter. However, this mechanism will fail and always return false if merchants are implementing the private secret key (which the latter is highly recommended and prefereable.) If you would choose to implement the private secret key, you may ignore the "mp_secured_verified" and send the checksum back to your server for validation. 
 
 ## Private Secret Key checksum validation formula
 
-    chksum = MD5(mp_merchant_ID + results.msgType + results.txn_ID + results.amount + results.status_code + merchant_private_secret_key)
+chksum = MD5(mp_merchant_ID + results.msgType + results.txn_ID + results.amount + results.status_code + merchant_private_secret_key)
 
 ## Support
 
-Submit issue to this repository or email to our support@molpay.com
+Submit issue to this repository or email to our support-sa@razer.com
 
-Merchant Technical Support / Customer Care : support@molpay.com<br>
-Sales/Reseller Enquiry : sales@molpay.com<br>
-Marketing Campaign : marketing@molpay.com<br>
-Channel/Partner Enquiry : channel@molpay.com<br>
-Media Contact : media@molpay.com<br>
-R&D and Tech-related Suggestion : technical@molpay.com<br>
-Abuse Reporting : abuse@molpay.com
+Merchant Technical Support / Customer Care : support-sa@razer.com<br>
+Sales/Reseller Enquiry : sales-sa@razer.com<br>
+Marketing Campaign : marketing-sa@razer.com<br>
+Channel/Partner Enquiry : channel-sa@razer.com<br>
+Media Contact : media-sa@razer.com<br>
+R&D and Tech-related Suggestion : technical-sa@razer.com<br>
+Abuse Reporting : abuse-sa@razer.com
