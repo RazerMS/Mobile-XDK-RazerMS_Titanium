@@ -2,7 +2,7 @@
 # license: Copyright © 2011-2019 MOLPay Sdn Bhd. All Rights Reserved. 
 -->
 
-<img src="https://user-images.githubusercontent.com/38641542/39353138-654385dc-4a39-11e8-9710-19e5f03ec62e.jpg">
+<img src="https://user-images.githubusercontent.com/38641542/74149934-ecf1a280-4c43-11ea-952b-37865c98c496.jpg">
 
 # rms-mobile-xdk-titanium
 
