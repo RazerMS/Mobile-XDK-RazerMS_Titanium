@@ -2,9 +2,9 @@
 # license: Copyright © 2011-2019 MOLPay Sdn Bhd. All Rights Reserved. 
 -->
 
-<img src="https://user-images.githubusercontent.com/38641542/74149934-ecf1a280-4c43-11ea-952b-37865c98c496.jpg">
-
 # rms-mobile-xdk-titanium
+
+<img src="https://user-images.githubusercontent.com/38641542/74424311-a9d64000-4e8c-11ea-8d80-d811cfe66972.jpg">
 
 This is the complete and functional Razer Merchant Services Titanium payment module that is ready to be implemented into Titanium project through simple copy and paste procedures. An example application project (MOLPayXDKExample) is provided for Razer Merchant Services XDK Titanium integration reference.
 
